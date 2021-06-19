@@ -9,7 +9,6 @@ A simple web server running on Flask, that enables a Raspberry Pi to power on/of
 
 	```
 	cd ~
-	sudo apt update
 	pip3 install flask
 	pip3 install RPi.GPIO
 	pip3 install paramiko
@@ -24,7 +23,7 @@ A simple web server running on Flask, that enables a Raspberry Pi to power on/of
 4. To start the program on boot, edit `rc.local` by typing `sudo nano /etc/rc.local` and adding the below line just before `exit 0`.
 
 	```
-	sudo python /home/pi/lifegate-av/app.py &
+	sudo python3 /home/pi/lifegate-av/app.py &
 	```
 	
 	Save the file with 'CTRL + X' and press 'Enter'
