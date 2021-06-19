@@ -75,8 +75,6 @@ def off():
 # Audio Control
 @app.route('/audio')
 def audio():
-    if not transport.is_active():
-        sleep(3)
     tesira.send('Level2 set mute 1 false'+'\n')
     tesira.send('Level1 set mute 1 false'+'\n')
     tesira.send('Level4 set mute 1 false'+'\n')
