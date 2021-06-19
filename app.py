@@ -15,7 +15,7 @@ tesira = None
 def establishConnection():
     global transport
     global tesira
-    transport = paramiko.Transport(('192.168.1.49', 22))
+    transport = paramiko.Transport(('192.168.0.49', 22))
     transport.connect(username = 'default', password = 'default')
     tesira = transport.open_channel('session')
     tesira.get_pty()
@@ -40,8 +40,11 @@ def index():
 # Power On
 @app.route('/on')
 def on():
-    GPIO.output(11, GPIO.HIGH)
-    GPIO.output(13, GPIO.HIGH)
+    if not GPIO.input(11):
+        GPIO.output(11, GPIO.HIGH)
+        GPIO.output(13, GPIO.HIGH)
+        sleep(120)
+
     
     establishConnection()
     tesira.send('Level2 set mute 1 true'+'\n')
@@ -72,6 +75,8 @@ def off():
 # Audio Control
 @app.route('/audio')
 def audio():
+    if not transport.is_active():
+        sleep(3)
     tesira.send('Level2 set mute 1 false'+'\n')
     tesira.send('Level1 set mute 1 false'+'\n')
     tesira.send('Level4 set mute 1 false'+'\n')
