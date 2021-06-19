@@ -1,4 +1,3 @@
-from os import stat
 from flask import Flask, render_template
 import paramiko
 import RPi.GPIO as GPIO
@@ -8,7 +7,7 @@ from time import sleep
 
 app = Flask(__name__)
 
-# SSH connection with Tesira Forte
+# Establish SSH connection with TesiraFORTÉ
 transport = None
 tesira = None
 
@@ -29,6 +28,7 @@ GPIO.setup(13, GPIO.OUT)
 
 
 # --- HOME SCREEN ---
+
 @app.route('/')
 def index():
     return render_template('index.html')
@@ -40,13 +40,15 @@ def index():
 # Power On
 @app.route('/on')
 def on():
+    # Turn on system
     if not GPIO.input(11):
         GPIO.output(11, GPIO.HIGH)
         GPIO.output(13, GPIO.HIGH)
-        sleep(120)
+        sleep(180)
 
-    
     establishConnection()
+
+    # Mute inputs and turn on amps
     tesira.send('Level2 set mute 1 true'+'\n')
     tesira.send('Level1 set mute 1 true'+'\n')
     tesira.send('Level4 set mute 1 true'+'\n')
@@ -58,11 +60,13 @@ def on():
 # Power Off
 @app.route('/off')
 def off():
+    # Turn off amps and close SSH connection
     tesira.send('LGAmp1 set ampPower false'+'\n')
     tesira.send('LGAmp2 set ampPower false'+'\n')
     sleep(3)
     transport.close()
     
+    # Turn off system
     GPIO.output(11, GPIO.LOW)
     GPIO.output(13, GPIO.LOW)
 
@@ -75,6 +79,7 @@ def off():
 # Audio Control
 @app.route('/audio')
 def audio():
+    # Unmute inputs
     tesira.send('Level2 set mute 1 false'+'\n')
     tesira.send('Level1 set mute 1 false'+'\n')
     tesira.send('Level4 set mute 1 false'+'\n')

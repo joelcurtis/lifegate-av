@@ -1,6 +1,6 @@
 # Lifegate AV System
 
-A simple web server running on Flask, that enables a Raspberry Pi to power on/off the Lifegate Padstow AV system.
+A simple web server running on Flask, that enables a Raspberry Pi to power on/off the Lifegate Padstow AV system, and control the TesiraFORTÉ device.
 
 ## Installation Instructions
 
