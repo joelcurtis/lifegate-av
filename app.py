@@ -79,21 +79,19 @@ def off():
 # Audio Control
 @app.route('/audio')
 def audio():
-    # Unmute inputs
-    tesira.send('Level2 set mute 1 false'+'\n')
-    tesira.send('Level1 set mute 1 false'+'\n')
-    tesira.send('Level4 set mute 1 false'+'\n')
-
     return render_template('audio.html')
 
 # Level Up
 @app.route('/levelUp/<channel>')
 def levelUp(channel):
     if channel == 'hh':
+        tesira.send('Level2 set mute 1 false'+'\n')
         tesira.send('Level2 increment level 1 4'+'\n')
     elif channel == 'pc':
+        tesira.send('Level1 set mute 1 false'+'\n')
         tesira.send('Level1 increment level 1 4'+'\n')
     elif channel == 'bt':
+        tesira.send('Level4 set mute 1 false'+'\n')
         tesira.send('Level4 increment level 1 4'+'\n')
     
     return render_template('audio.html')
@@ -102,10 +100,13 @@ def levelUp(channel):
 @app.route('/levelDown/<channel>')
 def levelDown(channel):
     if channel == 'hh':
+        tesira.send('Level2 set mute 1 false'+'\n')
         tesira.send('Level2 decrement level 1 4'+'\n')
     elif channel == 'pc':
+        tesira.send('Level1 set mute 1 false'+'\n')
         tesira.send('Level1 decrement level 1 4'+'\n')
     elif channel == 'bt':
+        tesira.send('Level4 set mute 1 false'+'\n')
         tesira.send('Level4 decrement level 1 4'+'\n')
     
     return render_template('audio.html')
