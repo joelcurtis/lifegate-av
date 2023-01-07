@@ -20,7 +20,9 @@ A simple web server running on Flask, that enables a Raspberry Pi to power on/of
 	git clone https://github.com/joelcurtis/lifegate-av.git
 	```
 
-4. To start the program on boot, edit `rc.local` by typing `sudo nano /etc/rc.local` and adding the below line just before `exit 0`.
+### Start Program on Boot
+
+To start the program on boot, edit `rc.local` by typing `sudo nano /etc/rc.local` and adding the below line just before `exit 0`.
 
 	```
 	sudo python3 /home/pi/lifegate-av/app.py &
